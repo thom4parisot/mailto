@@ -14,12 +14,15 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
+      'test/fixtures/*.html',
+      { pattern: 'lib/**/*.js', included: false, served: false }
     ],
 
     preprocessors: {
+      'index.js': ['browserify'],
       'test/unit/**/*.js': ['browserify'],
-      'index.js': ['browserify']
+      '**/*.html': ['html2js']
     },
 
     // list of files to exclude
@@ -62,7 +65,7 @@ module.exports = function(config) {
     // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
     // - PhantomJS
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // If browser does not capture in given timeout [ms], kill it
