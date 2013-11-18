@@ -48,16 +48,15 @@ It takes that:
 
 And generates that:
 
-```text
-Dear organiser,
-
-I am **John Doe** and I propose you a topic entitled **Lightning Talk** entitled **Low-tech HTML forms without server component**.
-
-Here is what I have to say about it:
-
-> This is better than every social media marketing e-reputation blogware software in the cloud. Convinced? Are you a VC? Worth 20 millions, at least.
-
-You can address me an email at john@doe.co.uk or by replying to this email.
+> Dear organiser,
+>
+> I am **John Doe** and I propose you a topic entitled **Lightning Talk** entitled **Low-tech HTML forms without server component**.
+>
+> Here is what I have to say about it:
+>
+>> This is better than every social media marketing e-reputation blogware software in the cloud. Convinced? Are you a VC? Worth 20 millions, at least.
+>
+> You can address me an email at john@doe.co.uk or by replying to this email.
 ```
 
 
