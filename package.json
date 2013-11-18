@@ -4,7 +4,8 @@
   "description": "Transform your HTML forms in beautiful mailto: links, form submission or XHR requests.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start --browser PhantomJS --single-run",
+    "test-watch": "karma start"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,7 @@
     "url": "https://github.com/oncletom/mailto/issues"
   },
   "devDependencies": {
-    "karma-chai": "0.0.2",
+    "karma-chai": "~0.0.2",
     "mocha": "~1.14.0",
     "karma-mocha": "~0.1.0",
     "browserify": "~2.35.4",
@@ -36,6 +37,8 @@
     "karma-requirejs": "~0.1.0",
     "karma-coffee-preprocessor": "~0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
-    "karma": "~0.10.4"
+    "karma": "~0.10.4",
+    "chai": "~1.8.1",
+    "karma-browserify": "0.0.5"
   }
 }

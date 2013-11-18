@@ -9,20 +9,27 @@ module.exports = function(config) {
 
 
     // frameworks to use
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'chai', 'browserify'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'lib/**/*.js',
       'test/unit/**/*.js'
     ],
 
+    preprocessors: {
+      'test/unit/**/*.js': ['browserify'],
+      'index.js': ['browserify']
+    },
 
     // list of files to exclude
     exclude: [
-      
+
     ],
+
+    browserify: {
+
+    },
 
 
     // test results reporter to use
