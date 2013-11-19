@@ -2,7 +2,7 @@
 
 > Transform your HTML forms in beautiful `mailto:` links, form submission or XHR requests.
 
-# What is does
+# What it does
 
 ![Demo as a GIF](https://raw.github.com/oncletom/mailto/master/demo.gif)
 
