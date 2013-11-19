@@ -166,25 +166,115 @@ form.addEventListener('change', function(){
 
 # JavaScript Options
 
+All options are optional and set up with usable defaults. Change them accordingly to your needs.
+
 ## `preventDefault`
+
+`Boolean` indicating if `mailto` should prevent the form to be submitted.
+
+Default value is `true`.
+
+
+```js
+// the form `submit` event will be fired, whatever `mailto` does.
+var m = new mailto('.mailto-form', { preventDefault: false });
+```
 
 ## `formatter`
 
+`Function` used to generate a human readable representation of the form. It is used by `mailto.getBody()`.
+
+Its first and only argument is the actual `mailto` instance bound to the form.
+
+```js
+// the form `submit` event will be fired, whatever `mailto` does.
+var m = new mailto('.mailto-form', {
+  formatter: return jsonEncoder(m){
+    return JSON.stringify(m.getData());
+  }
+});
+```
+
 ## `onSubmit`
+
+`Function` used when the HTML triggers a `submit` event. This is the best way to hook custom processing.
+
+Its first and only argument is the actual `mailto` instance bound to the form.
+
+```js
+// the form `submit` event will be fired, whatever `mailto` does.
+var m = new mailto('.mailto-form', {
+  onSubmit: return submitDebugger(m){
+    console.log(m.getMailtoLink);
+  }
+});
+```
 
 # JavaScript API
 
 ## `new mailto(form[, options])`
 
+Returns a new `mailto` instance configured with the options described above.
+
+```js
+var m = new mailto('.mailto-form');
+
+// play and use any of the other documented API methods
+```
+
 ## `getData()`
+
+Returns a serialised representation of the form values as a key/value object. Suitable for XHR requests.
+
+```js
+var m = new mailto('.mailto-form');
+
+m.getData();
+// -> { from: 'John Doe', message: 'Can I has cheesburger?' }
+```
 
 ## `getBody()`
 
+Returns a human readable formatted form content.
+
+By changing the `formatter` option, you can alter the output of this function.
+
+```js
+var m = new mailto('.mailto-form');
+
+m.getBody();
+// -> Name: John Doe
+// -> Message: Can I has cheeseburger?
+```
+
 ## `getFormData()`
 
-## `getmailtoUrl([to, [fields]])`
+Returns an expanded array of form values, included labels and field names.
 
-## `formatData(data)`
+```js
+var m = new mailto('.mailto-form');
+
+m.getFormData();
+// -> [
+// ->   { name: 'from', value: 'John Doe', label: 'Name' },
+// ->   { name: 'message', value: 'Can I has cheesburger?', label: 'Message' },
+// -> ]
+```
+
+## `getMailtoUrl([to, [fields]])`
+
+Returns an URL encoded string suitable for a clickable `a[href]` or `form[target]` attribute.
+
+```js
+var m = new mailto('.mailto-form');
+
+m.getMailtoUrl();
+// -> mailto:test@example.com?body:<URL Encoded Message Body>
+
+m.getMailtoUrl('someone@else.com');
+// -> mailto:someone@else.com?body:<URL Encoded Message Body>
+```
+
 
 # Contributing
 
