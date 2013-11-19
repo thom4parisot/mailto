@@ -77,7 +77,7 @@ describe('Mailto.getFormData()', function(){
     expect(m.getFormData()[2]).to.deep.equal({ name: 'message', label: 'Message Content:', value: '' });
   });
 
-  it('should collect the single value of an <input[type=radio]>', function(){
+  it('should collect the single value of an `input[type=radio]`', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
 
     // checked element
@@ -94,7 +94,7 @@ describe('Mailto.getFormData()', function(){
 
   });
 
-  it('should collect the multiple values of an <input[type=checkbox]>', function(){
+  it('should collect the multiple values of an `input[type=checkbox]`', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
 
     expect(m.getFormData()[2]).to.deep.equal({ name: 'format', label: 'Lightning Talk', value: 'lt' });
@@ -105,7 +105,7 @@ describe('Mailto.getFormData()', function(){
     expect(m.getFormData()[3]).to.deep.equal({ name: 'format', label: 'Lightning Talk', value: 'lt' });
   });
 
-  it('should collect relevant value of a <select>', function(){
+  it('should collect relevant value of a `select`', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
 
     expect(m.getFormData()[3]).to.deep.equal({ name: 'country', label: 'Current country of residence', value: '' });
@@ -190,6 +190,14 @@ describe('Mailto.getMailtoUrl()', function(){
   it('should return a default body', function(){
     var m = new Mailto('#fixtures-default .mailto-form');
 
-    expect(m.getMailtoUrl()).to.eq('mailto:test@example.com?body=User%20Email%3A%0D%0Asubject%3A%20Default%20value%0D%0AMessage%20Content%3A%0D%0A');
+    expect(m.getMailtoUrl()).to.eq('mailto:test@example.com?subject=&body=User%20Email%3A%0D%0Asubject%3A%20Default%20value%0D%0AMessage%20Content%3A%0D%0A');
+    expect(m.getMailtoUrl('chuck@norr.is')).to.eq('mailto:chuck@norr.is?subject=&body=User%20Email%3A%0D%0Asubject%3A%20Default%20value%0D%0AMessage%20Content%3A%0D%0A');
+    expect(m.getMailtoUrl('chuck@norr.is', { subject: 'Hello', body: 'World' })).to.eq('mailto:chuck@norr.is?subject=Hello&body=World%0D%0A');
+  });
+
+  it('should grab a subject form `data-*` or `input[type=hidden][name=subject]`', function(){
+    var m = new Mailto('#fixtures-smoke .mailto-form');
+
+    expect(m.getMailtoUrl()).to.match(/mailto:test@example\.com\?subject=Grabbed%20from%20data-uri&/);
   });
 });

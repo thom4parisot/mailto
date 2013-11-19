@@ -67,16 +67,20 @@ var m = new Mailto('form[action^="mailto:"]', {
   onSubmit: Mailto.sendForm
 });
 ```
+**Notice**: not yet implemented.
+
 
 ## Posting with `mailto:` and a custom layout
+
+The `formatter` will help you to format the form values with your own logic.
 
 ```js
 var templateSource = document.querySelector('#email-template').innerHTML;
 var template = handlebars.compile(templateSource);
 
 var m = new Mailto('form[action^="mailto:"]', {
-  formatter: function(data){
-    return template(data);
+  formatter: function(m){
+    return template(m.getData());
   }
 });
 ```
@@ -142,14 +146,16 @@ form.addEventListener('change', function(){
 
 # Contributing
 
+One rule only: *respect the code*. For the rest, bring your ideas, raise issues and push code :-)
+
 # License
 
 > The MIT License (MIT)
-> 
+>
 > Copyright (c) 2013, Thomas Parisot
-> 
+>
 > Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-> 
+>
 > The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-> 
+>
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
