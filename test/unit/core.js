@@ -26,8 +26,8 @@ function clearFixtures(){
 }
 
 describe('Mailto Constructor', function(){
-  before(createFixtures);
-  after(clearFixtures);
+  beforeEach(createFixtures);
+  afterEach(clearFixtures);
 
   it('should accept a valid CSS selector string', function(){
     expect(new Mailto('.mailto-form')).to.be.an.instanceof(Mailto);
@@ -65,8 +65,8 @@ describe('Mailto Constructor', function(){
 });
 
 describe('Mailto.getFormData()', function(){
-  before(createFixtures);
-  after(clearFixtures);
+  beforeEach(createFixtures);
+  afterEach(clearFixtures);
 
   it('should collect default form data', function(){
     var m = new Mailto('#fixtures-default .mailto-form');
@@ -76,15 +76,60 @@ describe('Mailto.getFormData()', function(){
     expect(m.getFormData()[1]).to.deep.equal({ name: 'subject', label: '', value: 'Default value' });
     expect(m.getFormData()[2]).to.deep.equal({ name: 'message', label: 'Message Content:', value: '' });
   });
+
+  it('should collect the single value of an input[type=radio]', function(){
+    var m = new Mailto('#fixtures-smoke .mailto-form');
+
+    // checked element
+    expect(m.getFormData()[1]).to.deep.equal({ name: 'gender', label: 'Male', value: 'male' });
+
+    m.form.querySelector('#gender-optout').checked = true;
+    expect(m.getFormData()[1]).to.deep.equal({ name: 'gender', label: 'Prefer not to say', value: 'optout' });
+
+    // unchecked element first
+    expect(m.getFormData()[6]).to.be.undefined;
+
+    m.form.querySelector('#tos-no').checked = true;
+    expect(m.getFormData()[6]).to.deep.equal({ name: 'tos', label: 'No, let\'s be friends', value: 'no' });
+
+  });
+
+  it('should collect the multiple values of an input[type=checkbox]', function(){
+    var m = new Mailto('#fixtures-smoke .mailto-form');
+
+    expect(m.getFormData()[2]).to.deep.equal({ name: 'format', label: 'Lightning Talk', value: 'lt' });
+
+    m.form.querySelector('#format-keynote').checked = true;
+
+    expect(m.getFormData()[2]).to.deep.equal({ name: 'format', label: 'Keynote', value: 'keynote' });
+    expect(m.getFormData()[3]).to.deep.equal({ name: 'format', label: 'Lightning Talk', value: 'lt' });
+  });
 });
 
 describe('Mailto.getData()', function(){
-  before(createFixtures);
-  after(clearFixtures);
+  beforeEach(createFixtures);
+  afterEach(clearFixtures);
 
   it('should collect default form data', function(){
-    var m = new Mailto('#fixtures-default .mailto-form');
+    var m = new Mailto('#fixtures-smoke .mailto-form');
 
     expect(m.getData()).to.deep.equal({ from: '', subject: 'Default value', message: '' });
+  });
+
+  it('should aggregate values together', function(){
+    var m = new Mailto('#fixtures-smoke .mailto-form');
+
+    m.form.querySelector('#format-keynote').checked = true;
+    m.form.querySelector('#tos-yes').checked = true;
+
+    expect(m.getData()).to.deep.equal({
+      from: '',
+      gender: 'male',
+      format: ['keynote', 'lt'],
+      country: '',
+      subjet: 'Default value',
+      message: '',
+      tos: 'yes'
+    });
   });
 });
