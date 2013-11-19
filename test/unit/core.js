@@ -72,8 +72,19 @@ describe('Mailto.getFormData()', function(){
     var m = new Mailto('#fixtures-default .mailto-form');
 
     expect(m.getFormData()).to.have.lengthOf(3);
-    expect(m.getFormData()[0]).to.deep.eq({ name: 'from', label: 'User Email', value: '' });
-    expect(m.getFormData()[1]).to.deep.eq({ name: 'subject', label: '', value: 'Default value' });
-    expect(m.getFormData()[2]).to.deep.eq({ name: 'message', label: 'Message Content:', value: '' });
+    expect(m.getFormData()[0]).to.deep.equal({ name: 'from', label: 'User Email', value: '' });
+    expect(m.getFormData()[1]).to.deep.equal({ name: 'subject', label: '', value: 'Default value' });
+    expect(m.getFormData()[2]).to.deep.equal({ name: 'message', label: 'Message Content:', value: '' });
+  });
+});
+
+describe('Mailto.getData()', function(){
+  before(createFixtures);
+  after(clearFixtures);
+
+  it('should collect default form data', function(){
+    var m = new Mailto('#fixtures-default .mailto-form');
+
+    expect(m.getData()).to.deep.equal({ from: '', subject: 'Default value', message: '' });
   });
 });
