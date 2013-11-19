@@ -77,7 +77,7 @@ describe('Mailto.getFormData()', function(){
     expect(m.getFormData()[2]).to.deep.equal({ name: 'message', label: 'Message Content:', value: '' });
   });
 
-  it('should collect the single value of an input[type=radio]', function(){
+  it('should collect the single value of an <input[type=radio]>', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
 
     // checked element
@@ -94,7 +94,7 @@ describe('Mailto.getFormData()', function(){
 
   });
 
-  it('should collect the multiple values of an input[type=checkbox]', function(){
+  it('should collect the multiple values of an <input[type=checkbox]>', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
 
     expect(m.getFormData()[2]).to.deep.equal({ name: 'format', label: 'Lightning Talk', value: 'lt' });
@@ -104,6 +104,16 @@ describe('Mailto.getFormData()', function(){
     expect(m.getFormData()[2]).to.deep.equal({ name: 'format', label: 'Keynote', value: 'keynote' });
     expect(m.getFormData()[3]).to.deep.equal({ name: 'format', label: 'Lightning Talk', value: 'lt' });
   });
+
+  it('should collect relevant value of a <select>', function(){
+    var m = new Mailto('#fixtures-smoke .mailto-form');
+
+    expect(m.getFormData()[3]).to.deep.equal({ name: 'country', label: 'Current country of residence', value: '' });
+
+    m.form.querySelector('[name="country"]').selectedIndex = 2;
+
+    expect(m.getFormData()[3]).to.deep.equal({ name: 'country', label: 'Current country of residence', value: 'fr' });
+  });
 });
 
 describe('Mailto.getData()', function(){
@@ -111,7 +121,7 @@ describe('Mailto.getData()', function(){
   afterEach(clearFixtures);
 
   it('should collect default form data', function(){
-    var m = new Mailto('#fixtures-smoke .mailto-form');
+    var m = new Mailto('#fixtures-default .mailto-form');
 
     expect(m.getData()).to.deep.equal({ from: '', subject: 'Default value', message: '' });
   });
@@ -127,7 +137,7 @@ describe('Mailto.getData()', function(){
       gender: 'male',
       format: ['keynote', 'lt'],
       country: '',
-      subjet: 'Default value',
+      subject: 'Default value',
       message: '',
       tos: 'yes'
     });
