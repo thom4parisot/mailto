@@ -4,7 +4,9 @@
 
 # What is does
 
-It takes that:
+![Demo as a GIF](https://raw.github.com/oncletom/mailto/master/demo.gif)
+
+It basically uses your HTML forms, like this one:
 
 ```html
 <fieldset>
@@ -46,7 +48,7 @@ It takes that:
 </fieldset>
 ```
 
-And generates that:
+And it helps you to outputs that for various needs, such as a nice and properly formatted text, ready to use:
 
 > Dear organiser,
 >
@@ -58,13 +60,53 @@ And generates that:
 >
 > You can address me an email at john@doe.co.uk or by replying to this email.
 
+Also, you can generate a `mailto:` link to let any user send the content for the form in a nice way without any server side component.
+
+# Install
+
+<table>
+  <thead>
+    <tr>
+      <th>npm</th>
+      <th>bower</th>
+      <th>old school</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>npm install --save mailto</code></td>
+      <td><code>bower install --save mailto</code></td>
+      <td><a href="https://github.com/oncletom/mailto/archive/master.zip">download zipfile</a></td>
+    </tr>
+  </tbody>
+</table>
+
+Then include it in your pages or bake it through your build system:
+
+```html
+<script src="https://rawgithub.com/oncletom/mailto/dist/mailto.min.js"></script>
+<script>
+// Vanilla JS
+var m = new Mailto(…);
+
+// Using RequireJS
+require(['mailto'], function(mailto){
+  var m = new Mailto(…);
+});
+
+// Using CommonJS module loader (browser and Node.js)
+var mailto = require('mailto');
+var m = new Mailto(…);
+</script>
+```
+
 # Examples
 
 ## Simple posting with `mailto:`
 
 ```js
-var m = new Mailto('form[action^="mailto:"]', {
-  onSubmit: Mailto.sendForm
+var m = new mailto('form[action^="mailto:"]', {
+  onSubmit: mailto.sendForm
 });
 ```
 **Notice**: not yet implemented.
@@ -78,7 +120,7 @@ The `formatter` will help you to format the form values with your own logic.
 var templateSource = document.querySelector('#email-template').innerHTML;
 var template = handlebars.compile(templateSource);
 
-var m = new Mailto('form[action^="mailto:"]', {
+var m = new mailto('form[action^="mailto:"]', {
   formatter: function(m){
     return template(m.getData());
   }
@@ -88,7 +130,7 @@ var m = new Mailto('form[action^="mailto:"]', {
 ## Posting with Ajax/XHR
 
 ```js
-var m = new Mailto('form[action^="mailto:"]', {
+var m = new mailto('form[action^="mailto:"]', {
   onSubmit: function(m){
     $.post('/contact', { type: 'json' }, m.getData());
   }
@@ -99,7 +141,7 @@ var m = new Mailto('form[action^="mailto:"]', {
 
 ```js
 var form = document.querySelector('.mailto-form');
-var m = new Mailto(form);
+var m = new mailto(form);
 var previewButton = form.querySelector('.preview-button');
 var previewContainer = form.querySelector('+ .preview-container');
 
@@ -114,11 +156,11 @@ previewButton.addEventListener('click', function(){
 
 ```js
 var form = document.querySelector('.mailto-form');
-var m = new Mailto(form);
+var m = new mailto(form);
 var emailLink = form.querySelector('.email-link-fallback');
 
 form.addEventListener('change', function(){
-  emailLink.href = m.getMailtoUrl();
+  emailLink.href = m.getmailtoUrl();
 });
 ```
 
@@ -132,7 +174,7 @@ form.addEventListener('change', function(){
 
 # JavaScript API
 
-## `new Mailto(form[, options])`
+## `new mailto(form[, options])`
 
 ## `getData()`
 
@@ -140,7 +182,7 @@ form.addEventListener('change', function(){
 
 ## `getFormData()`
 
-## `getMailtoUrl([to, [fields]])`
+## `getmailtoUrl([to, [fields]])`
 
 ## `formatData(data)`
 
