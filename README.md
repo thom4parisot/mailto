@@ -1,4 +1,4 @@
-# mailto
+# mailto  [![Build Status](https://secure.travis-ci.org/oncletom/mailto.png?branch=master)](http://travis-ci.org/oncletom/mailto)
 
 > Transform your HTML forms in beautiful `mailto:` links, form submission or XHR requests.
 
