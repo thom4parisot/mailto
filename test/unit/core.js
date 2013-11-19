@@ -129,17 +129,56 @@ describe('Mailto.getData()', function(){
   it('should aggregate values together', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
 
+    // thought DOM was unchecking radio but no…
+    m.form.querySelector('#gender-female').checked = true;
+    m.form.querySelector('#gender-male').checked = false;
+
     m.form.querySelector('#format-keynote').checked = true;
     m.form.querySelector('#tos-yes').checked = true;
 
     expect(m.getData()).to.deep.equal({
       from: '',
-      gender: 'male',
+      gender: 'female',
       format: ['keynote', 'lt'],
       country: '',
       subject: 'Default value',
       message: '',
       tos: 'yes'
     });
+  });
+});
+
+describe('Mailto.getBody()', function(){
+  beforeEach(createFixtures);
+  afterEach(clearFixtures);
+
+  it('should return a default body', function(){
+    var m = new Mailto('#fixtures-default .mailto-form');
+    var expectedOutput = document.querySelector('#fixtures-default .expected-output');
+
+    expect(m.getBody()).to.eq(expectedOutput.innerText.trim());
+  });
+
+  it('should return a custom formatted body', function(){
+    var expectedOutput = document.querySelector('#fixtures-smoke .expected-output');
+    var m = new Mailto('#fixtures-smoke .mailto-form', {
+      formatter: function(m){
+        var data = m.getData();
+
+        return document.querySelector('#fixtures-smoke .content-template').innerText.trim().replace(/{{(\w+)}}/g, function(m, key){
+          return data[key] && data[key].toString();
+        });
+      }
+    });
+
+    m.form.querySelector('#gender-female').checked = true;
+    m.form.querySelector('#gender-male').checked = false;
+    m.form.querySelector('[name="from"]').value = 'jane@doe.co.uk';
+    m.form.querySelector('#format-keynote').checked = true;
+    m.form.querySelector('[name="country"]').selectedIndex = 1;
+    m.form.querySelector('[name="subject"]').value = 'Men come from Venus, really';
+    m.form.querySelector('[name="message"]').value = 'Have some viagra for you people.';
+
+    expect(m.getBody()).to.eq(expectedOutput.innerText.trim());
   });
 });
