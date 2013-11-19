@@ -182,3 +182,14 @@ describe('Mailto.getBody()', function(){
     expect(m.getBody()).to.eq(expectedOutput.innerText.trim());
   });
 });
+
+describe('Mailto.getMailtoUrl()', function(){
+  beforeEach(createFixtures);
+  afterEach(clearFixtures);
+
+  it('should return a default body', function(){
+    var m = new Mailto('#fixtures-default .mailto-form');
+
+    expect(m.getMailtoUrl()).to.eq('mailto:test@example.com?body=User%20Email%3A%0D%0Asubject%3A%20Default%20value%0D%0AMessage%20Content%3A%0D%0A');
+  });
+});
