@@ -156,6 +156,7 @@ describe('Mailto.getBody()', function(){
     var m = new Mailto('#fixtures-default .mailto-form');
     var expectedOutput = document.querySelector('#fixtures-default .expected-output');
 
+    console.log(m.getFormData()[2])
     expect(m.getBody()).to.eq(expectedOutput.innerText.trim());
   });
 
