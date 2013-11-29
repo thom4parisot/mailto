@@ -1,6 +1,6 @@
 {
   "name": "mailto",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Transform your HTML forms in beautiful mailto: links, form submission or XHR requests.",
   "main": "index.js",
   "scripts": {
