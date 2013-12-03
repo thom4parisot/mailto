@@ -37,7 +37,7 @@ module.exports = function(config) {
       build: process.env.TRAVIS_BUILD_NUMBER,
       recordVideo: false,
       recordScreenshots: false,
-      startConnect: false
+      startConnect: true
     },
 
     browserify: {
