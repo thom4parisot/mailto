@@ -4,8 +4,8 @@
   "description": "Transform your HTML forms in beautiful mailto: links, form submission or XHR requests.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --browsers SauceIE9 --single-run",
-    "test-watch": "karma start",
+    "test": "karma start --single-run",
+    "test-watch": "karma start --browsers Firefox,Chrome",
     "build": "browserify -r ./index.js -s mailto | uglifyjs > ./dist/mailto.min.js"
   },
   "repository": {
