@@ -4,7 +4,7 @@
   "description": "Transform your HTML forms in beautiful mailto: links, form submission or XHR requests.",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --browser PhantomJS --single-run",
+    "test": "karma start --browsers PhantomJS --single-run",
     "test-watch": "karma start",
     "build": "browserify -r ./index.js -s mailto | uglifyjs > ./dist/mailto.min.js"
   },
