@@ -2,3 +2,8 @@ language: node_js
 node_js: "0.10"
 before_script:
   - npm run build
+  - curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh | bash
+env:
+  global:
+    - secure: "fNa5eAaFlQvpbBRaq5YPDoq2Co5aibO0r/eeRKMkigA53GMmapCydvxFdTu1F3LEiShgkBEj/zNl8ZpOfhHby13QCXST7FLUPyWBI7gn/pmrEDaoLhGq2zqF89kNiE1zkMGs7zFr6CF4CZXfXMMzrJN68nhXZXEtX+rSTToU9ws="
+    - secure: "bQyLTpe+fWEjbMJZWYeWtFnrD/j3vHEDko6fIPDWD3GN8e81jOizkAcqCRP3EP4yRVv0M+gEwhJj8lUI2pUrkhBaaSNZboMrweQJZPnJVoAxBzi5j5/RmtbiMIE8NBs4b3Buy5NPo0W+DHdRm4/C6ZEPZu18VuWRcXO2HaCqOPg="

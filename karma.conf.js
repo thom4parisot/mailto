@@ -30,6 +30,16 @@ module.exports = function(config) {
 
     ],
 
+    sauceLabs: {
+      username: process.env.SAUCE_USERNAME,
+      accessKey: process.env.SAUCE_ACCESS_KEY,
+      testName: 'mailto',
+      build: process.env.TRAVIS_BUILD_NUMBER,
+      recordVideo: false,
+      recordScreenshots: false,
+      startConnect: false
+    },
+
     browserify: {
 
     },
@@ -65,7 +75,22 @@ module.exports = function(config) {
     // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
     // - PhantomJS
     // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['PhantomJS', 'SauceIE9', 'SauceAndroid'],
+
+    customLaunchers: {
+      SauceIE9: {
+        base: 'SauceLabs',
+        browserName: 'internet explorer',
+        platform: 'Windows 7',
+        version: 9
+      },
+      SauceAndroid: {
+        base: 'SauceLabs',
+        browserName: 'android',
+        platform: 'Linux',
+        version: '2.3'
+      }
+    },
 
 
     // If browser does not capture in given timeout [ms], kill it
