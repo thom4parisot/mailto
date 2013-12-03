@@ -1,7 +1,7 @@
 {
   "name": "mailto",
   "main": "dist/mailto.min.js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/oncletom/mailto",
   "authors": [
     "Thomas Parisot (https://oncletom.io)"
