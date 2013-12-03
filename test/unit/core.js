@@ -156,7 +156,7 @@ describe('Mailto.getBody()', function(){
     var m = new Mailto('#fixtures-default .mailto-form');
     var expectedOutput = document.querySelector('#fixtures-default .expected-output');
 
-    expect(m.getBody()).to.eq(expectedOutput.innerText.trim());
+    expect(m.getBody()).to.eq(Mailto.textContent(expectedOutput).trim());
   });
 
   it('should return a custom formatted body', function(){
@@ -165,7 +165,7 @@ describe('Mailto.getBody()', function(){
       formatter: function(m){
         var data = m.getData();
 
-        return document.querySelector('#fixtures-smoke .content-template').innerText.trim().replace(/{{(\w+)}}/g, function(m, key){
+        return Mailto.textContent(document.querySelector('#fixtures-smoke .content-template')).trim().replace(/{{(\w+)}}/g, function(m, key){
           return data[key] && data[key].toString();
         });
       }
@@ -179,7 +179,7 @@ describe('Mailto.getBody()', function(){
     m.form.querySelector('[name="subject"]').value = 'Men come from Venus, really';
     m.form.querySelector('[name="message"]').value = 'Have some viagra for you people.';
 
-    expect(m.getBody()).to.eq(expectedOutput.innerText.trim());
+    expect(m.getBody()).to.eq(Mailto.textContent(expectedOutput).trim());
   });
 });
 
