@@ -25,6 +25,12 @@ function clearFixtures(){
   document.body.removeChild(fixtures);
 }
 
+function getNamedValues(data, namedValue){
+  return data.filter(function(d){
+    return d.name === namedValue;
+  });
+}
+
 describe('Mailto Constructor', function(){
   beforeEach(createFixtures);
   afterEach(clearFixtures);
@@ -79,18 +85,23 @@ describe('Mailto.getFormData()', function(){
 
   it('should collect the single value of an `input[type=radio]`', function(){
     var m = new Mailto('#fixtures-smoke .mailto-form');
+    var genders = {
+      male: { name: 'gender', label: 'Male', value: 'male' },
+      optout: { name: 'gender', label: 'Prefer not to say', value: 'optout' }
+    };
 
     // checked element
-    expect(m.getFormData()[1]).to.deep.equal({ name: 'gender', label: 'Male', value: 'male' });
+    expect(getNamedValues(m.getFormData(), 'gender')).to.deep.equal([genders.male]);
 
     m.form.querySelector('#gender-optout').checked = true;
-    expect(m.getFormData()[1]).to.deep.equal({ name: 'gender', label: 'Prefer not to say', value: 'optout' });
+    m.form.querySelector('#gender-male').checked = false;   // PhantomJS bug
+    expect(getNamedValues(m.getFormData(), 'gender')).to.deep.equal([genders.optout]);
 
     // unchecked element first
-    expect(m.getFormData()[6]).to.be.undefined;
+    expect(m.getFormData()).to.be.length.of(6);
 
     m.form.querySelector('#tos-no').checked = true;
-    expect(m.getFormData()[6]).to.deep.equal({ name: 'tos', label: 'No, let\'s be friends', value: 'no' });
+    expect(getNamedValues(m.getFormData(), 'tos')).to.deep.equal([{ name: 'tos', label: 'No, let\'s be friends', value: 'no' }]);
 
   });
 
