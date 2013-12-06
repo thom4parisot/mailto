@@ -247,6 +247,17 @@ m.getBody();
 // -> Message: Can I has cheeseburger?
 ```
 
+## `getSerialisedData()`
+
+Returns a GET-like serialisation string of the form values.
+
+```js
+var m = new mailto('.mailto-form');
+
+m.getSerialisedData();
+// -> ?from=John%20Doe&message=Can%20I%20has%20cheesburger%3F
+```
+
 ## `getFormData()`
 
 Returns an expanded array of form values, included labels and field names.
