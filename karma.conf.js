@@ -16,11 +16,13 @@ module.exports = function(config) {
     files: [
       'test/unit/**/*.js',
       'test/fixtures/*.html',
+      'test/helpers.js',
       { pattern: 'lib/**/*.js', included: false, served: false }
     ],
 
     preprocessors: {
       'index.js': ['browserify'],
+      'test/*.js': ['browserify'],
       'test/unit/**/*.js': ['browserify'],
       '**/*.html': ['html2js']
     },

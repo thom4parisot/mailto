@@ -2,34 +2,9 @@
 
 var Mailto = require('../../index.js');
 var expect = require('chai').expect;
-var fixtures;
-
-function createFixtures(){
-  fixtures = document.createElement('div');
-  fixtures.id = 'fixtures';
-
-  Object.keys(window.__html__).forEach(function(location){
-    location.match(/(\w+).html$/);
-
-    var el = document.createElement('div');
-    el.id = 'fixtures-'+RegExp.$1;
-    el.innerHTML = window.__html__[location];
-
-    fixtures.appendChild(el);
-  });
-
-  document.body.appendChild(fixtures);
-}
-
-function clearFixtures(){
-  document.body.removeChild(fixtures);
-}
-
-function getNamedValues(data, namedValue){
-  return data.filter(function(d){
-    return d.name === namedValue;
-  });
-}
+var h = require('../helpers');
+var createFixtures = h.fixtures.createFixtures;
+var clearFixtures = h.fixtures.clearFixtures;
 
 describe('Mailto Constructor', function(){
   beforeEach(createFixtures);
@@ -91,17 +66,17 @@ describe('Mailto.getFormData()', function(){
     };
 
     // checked element
-    expect(getNamedValues(m.getFormData(), 'gender')).to.deep.equal([genders.male]);
+    expect(h.getNamedValues(m.getFormData(), 'gender')).to.deep.equal([genders.male]);
 
     m.form.querySelector('#gender-optout').checked = true;
     m.form.querySelector('#gender-male').checked = false;   // PhantomJS bug
-    expect(getNamedValues(m.getFormData(), 'gender')).to.deep.equal([genders.optout]);
+    expect(h.getNamedValues(m.getFormData(), 'gender')).to.deep.equal([genders.optout]);
 
     // unchecked element first
     expect(m.getFormData()).to.be.length.of(6);
 
     m.form.querySelector('#tos-no').checked = true;
-    expect(getNamedValues(m.getFormData(), 'tos')).to.deep.equal([{ name: 'tos', label: 'No, let\'s be friends', value: 'no' }]);
+    expect(h.getNamedValues(m.getFormData(), 'tos')).to.deep.equal([{ name: 'tos', label: 'No, let\'s be friends', value: 'no' }]);
 
   });
 
